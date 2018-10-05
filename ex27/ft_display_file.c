@@ -1,40 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_display_file.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qbackaer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/03 19:34:24 by qbackaer          #+#    #+#             */
+/*   Updated: 2018/10/03 19:41:18 by qbackaer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h>
 
-void    fprint(int fdin, int fdout)
+int		zp_putchar(char c)
 {
-    char buff;
-
-    buff = 'a';
-    while(read(fdin, &buff, 1))
-        write(fdout, &buff, 1);
+	write(1, &c, 1);
+	return (0);
 }
 
-int     main(int argc, char **argv)
+void	zp_putstr(char *str)
 {
-    int fd;
+	int i;
 
-    if (argc == 1)
-        write(2, "Filename missing.\n", 19);
-    else if (argc > 2)
-        write (2, "Too many arguments.\n", 20);
-    else if (argc == 2)
-    {
-        fd = open(argv[1], O_RDONLY);
-        if (fd == -1)
-        {
-            write(2, "Failed to open file.\n", 21);
-            return (1);
-        }
-        fprint(fd, 1);
-        if (close(fd) == -1)
-        {
-            write(2, "Failed to close file.\n", 22);
-            return (1);
-        }
-    }
-    return (0);
+	i = 0;
+	while (str[i])
+	{
+		zp_putchar(str[i]);
+		i++;
+	}
+}
+
+void	display(char *filename)
+{
+	int		fd;
+	int		d;
+	char	buffer[2];
+
+	if ((fd = open(filename, O_RDONLY)) < 0)
+		return ;
+	while ((d = read(fd, buffer, 1)))
+	{
+		buffer[d] = '\0';
+		zp_putstr(buffer);
+	}
+	if (close(fd) < 0)
+		return ;
+}
+
+int		main(int argc, char **argv)
+{
+	if (argc == 1)
+	{
+		write(2, "File name missing.\n", 19);
+		return (0);
+	}
+	if (argc > 2)
+	{
+		write(2, "Too many arguments.\n", 20);
+		return (0);
+	}
+	display(argv[1]);
+	return (0);
 }

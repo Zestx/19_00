@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_foreach.c                                       :+:      :+:    :+:   */
+/*   ft_iterative_factorial.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qbackaer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/03 14:13:46 by qbackaer          #+#    #+#             */
-/*   Updated: 2018/10/03 14:36:09 by qbackaer         ###   ########.fr       */
+/*   Created: 2018/10/01 14:49:32 by qbackaer          #+#    #+#             */
+/*   Updated: 2018/10/03 14:19:10 by qbackaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_foreach(int *tab, int length, void (*f)(int))
+int		ft_iterative_factorial(int nbr)
 {
 	int i;
+	int f_nbr;
 
-	i = 0;
-	while (i < length)
+	f_nbr = 1;
+	i = 1;
+	if (nbr > 12 || nbr < 0)
+		return (0);
+	while (i <= nbr)
 	{
-		(*f)(tab[i]);
+		f_nbr *= i;
 		i++;
 	}
+	return (f_nbr);
 }

@@ -1,21 +1,22 @@
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
-NAME	= ft_display_file
-SRC		= ft_display_file.c
+CC = gcc
+CFLAGS = -Wall -Wextra
+SRC = srcs/ft_putchar.c srcs/ft_putstr.c srcs/ft_strcmp.c srcs/ft_strlen.c srcs/ft_swap.c
+HEAD = ./includes/*.h
+NAME = libft.a
 
 all : $(NAME)
 
-$(NAME) : $(NAME).o
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+$(NAME) :
+	ar -rc libft.a *.o
 
+$(NAME) :
+	$(CC) $(CFLAGS) -c $(SRC) -I ./includes
+	ar rc $(NAME) ft_putchar.o ft_putstr.o ft_strcmp.o ft_strlen.o ft_swap.o
 
-%.o : %.c
-	$(CC) $(CFLAGS) $(SRC) -c -o $(NAME).o
-
-clean : 
-	rm -f $(NAME).o
+clean :
+	/bin/rm -f ft_putchar.o ft_putstr.o ft_strcmp.o ft_strlen.o ft_swap.o
 
 fclean : clean
-	rm -f $(NAME)
+	/bin/rm -f $(NAME)
 
 re : fclean all
